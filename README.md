@@ -9,7 +9,7 @@
 ## 最终效果展示
 
 先上最终效果图：
-![](../../data/posts/20200115_vue_app/display.gif)
+![](./static/img/display.gif)
 
 ## 初始化框架
 
@@ -23,12 +23,12 @@
 
 [将SVG矢量图转成图标](https://icomoon.io/app/#/select)
 
-将下载的 `style.css` 放在 `mt-app/src/common/css/icon.css` 中  
-`fonts` 文件夹拷贝到 `mt-app/src/common` 下
+将下载的 `style.css` 放在 `src/common/css/icon.css` 中  
+`fonts` 文件夹拷贝到 `src/common` 下
 
 ### mock数据
 
-在 `mt-app/build/webpack.dev.conf.js` 中加载data数据
+在 `build/webpack.dev.conf.js` 中加载data数据
 
 ```js
 cd mt-app
@@ -50,11 +50,11 @@ mkdir static/css
 touch static/css/reset.css
 ```
 
-在 `mt-app/index.html` 中添加 `<link rel="stylesheet" href="static/css/reset.css">`
+在 `index.html` 中添加 `<link rel="stylesheet" href="static/css/reset.css">`
 
 ### 配置路由
 
-在 `mt-app/src/components` 中添加5个组件
+在 `src/components` 中添加5个组件
 ``` bash
 mkdir src/components/header src/components/nav src/components/goods src/components/ratings src/components/seller
 touch src/components/header/Header.vue
@@ -64,9 +64,9 @@ touch src/components/ratings/Ratings.vue
 touch src/components/seller/Seller.vue
 ```
 
-在 `mt-app/src/App.vue` 中引入 `Header` 和 `Nav`，并注册组件  
+在 `src/App.vue` 中引入 `Header` 和 `Nav`，并注册组件  
 `npm install vue-router --save`  
-在 `mt-app/src/main.js` 中
+在 `src/main.js` 中
 ```js
 import VueRouter from 'vue-router';
 Vue.use(VueRouter)
@@ -107,14 +107,14 @@ new Vue({
 ```
 
 为了实现点击可跳转，设置tab页选中的样式，设置tab的下划线。
-需要在 `mt-app/src/main.js` 中添加属性 `linkActiveClass`
+需要在 `src/main.js` 中添加属性 `linkActiveClass`
 ```js
 const router = new VueRouter({
   routes,
   linkActiveClass:"active" // 点击选项卡颜色变化
 })
 ```
-代码见 `mt-app/src/components/nav/Nav.vue`
+代码见 `src/components/nav/Nav.vue`
 
 ## 头部结构和样式设计
 
@@ -153,7 +153,7 @@ const router = new VueRouter({
      + 新用户折扣信息
 4. 关闭内容容器
 
-代码见 `mt-app/src/components/header/Header.vue` 和 `mt-app/src/components/star/Star.vue`
+代码见 `src/components/header/Header.vue` 和 `src/components/star/Star.vue`
 
 ## 点菜页面设计(核心功能)
 
@@ -199,7 +199,7 @@ this.foodScroll.on("scroll",(pos) => {
 3. 根据滚动位置确认下标,与左侧对应(类似轮播图),见 `currentIndex` 属性
 4. 通过下标实现点击左侧,滚动右侧(类似轮播图),见 `@click="selectMenu()"` 方法,重点关注[scrollToElement](https://ustbhuangyi.github.io/better-scroll/doc/zh-hans/api.html#scrolltoelementel-time-offsetx-offsety-easing)方法
 
-代码见 `mt-app/src/components/goods/Goods.vue`
+代码见 `src/components/goods/Goods.vue`
 
 ## 购物车(核心功能)
 
@@ -242,7 +242,7 @@ touch src/components/cartcontrol/CartControl.vue
 
 当购物车数量增减后，想让左侧导航栏右上角的数字产生联动效果，需修改`Goods.vue` 中的分类列表——除【专场】外的导航——`calculateCount(item.spus)`。此时，导航栏右上角会显示的单个分类的购物车总数量。父级需加上相对定位，不然影响导航栏右上角的数字的显示位置，也就是 `menu-item` 的样式需要加上 `position: relative;`
 
-代码见 `mt-app/src/components/goods/Goods.vue` 和 `mt-app/src/components/shopcart/Shopcart.vue` 和 `mt-app/src/components/cartcontrol/CartControl.vue`
+代码见 `src/components/goods/Goods.vue` 和 `src/components/shopcart/Shopcart.vue` 和 `src/components/cartcontrol/CartControl.vue`
 
 ## 购物车列表(核心功能)
 
@@ -254,7 +254,7 @@ touch src/components/cartcontrol/CartControl.vue
 3. 内容 `list-content`，包括左侧的商品名称、单位/描述(2选1显示)、价格以及右侧的+/-号组件 `CartControl.vue`。使用 `<app-cart-control :food="food"></app-cart-control>` 传参。 商品名称、单位/描述(2选1显示)、价格可通过遍历 `selectFoods` 拿到数据。其中 `transform: translateY(-100%);` 表示内容的高度=列表撑开的高度，但是列表的最大高度为360px，超出的部分用 `better-scroll` 滚动显示。
 4. 底部 `list-bottom`，这个好像没用到，注释也没啥影响
 
-代码见 `mt-app/src/components/shopcart/Shopcart.vue`
+代码见 `src/components/shopcart/Shopcart.vue`
 
 ## 商品详情页面(核心功能)
 
@@ -288,7 +288,7 @@ touch /src/components/productDetail/ProductDetail.vue
 3. 外卖评价
 
 这里有两个坑要处理：  
-1. 在父页面点击+/-号组件时，也会跳转到商品详情页面(此时你只是想加购物车，并不想跳转到商品详情页面)。因此，我们需要阻止当前的冒泡事件。需修改 `mt-app/src/components/cartcontrol/CartControl.vue` 中+号的点击事件为 `@click.stop.prevent="increaseCart"`。也就是点击+号之外的任何地方，都会跳转到商品详情页面，而点击+号只会加入购物车，不进行页面的跳转。关闭按钮添加一个点击事件 `@click="closeView"` 即可。
+1. 在父页面点击+/-号组件时，也会跳转到商品详情页面(此时你只是想加购物车，并不想跳转到商品详情页面)。因此，我们需要阻止当前的冒泡事件。需修改 `src/components/cartcontrol/CartControl.vue` 中+号的点击事件为 `@click.stop.prevent="increaseCart"`。也就是点击+号之外的任何地方，都会跳转到商品详情页面，而点击+号只会加入购物车，不进行页面的跳转。关闭按钮添加一个点击事件 `@click="closeView"` 即可。
 2. 网络请求的图片，需要在跳转到商品详情页面前，给img容器预留空间。当图片没有网络请求下来前，预留位置，请求下来后，将图片填充到预留位置上。否则底下的名称、价格、评价等会往上跑，布局会很丑。
 
 ```css
@@ -301,7 +301,7 @@ touch /src/components/productDetail/ProductDetail.vue
 }
 ```
 
-代码见 `mt-app/src/components/goods/Goods.vue` 和 `mt-app/src/components/productDetail/ProductDetail.vue`
+代码见 `src/components/goods/Goods.vue` 和 `src/components/productDetail/ProductDetail.vue`
 
 ## 商品详情(评价列表)
 
@@ -342,7 +342,7 @@ touch src/components/split/Split.vue
 </div>
 ```
 
-代码见 `mt-app/src/components/productDetail/ProductDetail.vue` 和 `mt-app/src/components/split/Split.vue`，。
+代码见 `src/components/productDetail/ProductDetail.vue` 和 `src/components/split/Split.vue`，。
 
 ## 评价页面
 
@@ -424,7 +424,7 @@ this.$nextTick(()=>{
 
 评价列表项跟 `ProductDetail.vue` 几乎一模一样，copy过来，改下遍历的数据源就行。  
 评价时间戳需利用 `selectComments()` 转换成 `yyyy.MM.dd` 格式  
-代码见 `mt-app/src/App.vue` 和 `mt-app/src/components/ratings/Ratings.vue`
+代码见 `src/App.vue` 和 `src/components/ratings/Ratings.vue`
 
 ## 商家页面
 
@@ -517,7 +517,7 @@ this.menuScroll = new BScroll(this.$refs.menuScroll,{
 MAC：系统偏好设置——网络——状态，就能看到一个IP地址，如：`192.168.0.102`  
 此时你在浏览器输入`192.168.0.102:8081`，是不能直接访问的。
 
-需要修改 `mt-app/config/index.js` 文件  
+需要修改 `config/index.js` 文件  
 1. 将 `port` 改成 `8081` (因为利用weinre进行真机测试时端口号会冲突，weinre的默认端口为8080)
 2. 将 `host` 改成 `0.0.0.0`
 3. 修改config后，必须要重启项目
@@ -537,7 +537,7 @@ weinre --boundHost 192.168.0.102
 
 ## 项目打包并运行调试
 
-打包项目前，先检查 `mt-app/config/index.js` 下 `build` 环境的参数，将`productionSourceMap` 改成 `false` ，避免打包的时候生成很多sourcemap的、协助我们调试的内容，毕竟很占空间。  
+打包项目前，先检查 `config/index.js` 下 `build` 环境的参数，将`productionSourceMap` 改成 `false` ，避免打包的时候生成很多sourcemap的、协助我们调试的内容，毕竟很占空间。  
 `npm run build` 后会生成一个 `dist` 文件夹。  
 此时会有一个提示，打包的文件需要在服务环境下运行，直接打开 `index.html` 无效。
 ```bash
