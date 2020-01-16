@@ -4,6 +4,8 @@
 
 这是一个利用vue+express仿美团外卖app的项目。需要有[vue](https://cn.vuejs.org/)和[es6](http://es6.ruanyifeng.com/)的基础，[express](http://expressjs.com/zh-cn/)会一点点就行。
 
+本代码来源于腾讯课堂米斯特吴的课程，如有需要，请[购买课程](https://ke.qq.com/course/464832#term_id=100556268)
+
 ## 最终效果展示
 
 先上最终效果图：
